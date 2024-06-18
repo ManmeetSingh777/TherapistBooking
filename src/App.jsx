@@ -8,7 +8,10 @@ import ContactUsPage from './pages/ContactUsPage';
 import EventsPage from './pages/EventsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import AdminRegisterPage from './pages/AdminRegisterPage'; // Import AdminRegisterPage
+import AdminRegisterPage from './pages/AdminRegisterPage';
+import BookingPage from './pages/BookingPage';
+import ManageAvailabilityPage from './pages/ManageAvailabilityPage';
+import ProfilePage from './pages/ProfilePage';
 import NavBar from './components/NavBar';
 
 function App() {
@@ -24,7 +27,10 @@ function App() {
         <Route path="/events" element={<EventsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/admin-register" element={<AdminRegisterPage />} /> {/* Add route for AdminRegisterPage */}
+        <Route path="/admin-register" element={<AdminRegisterPage />} />
+        <Route path="/booking/:therapistId" element={<BookingPage />} />
+        <Route path="/manage-availability/:therapistId" element={<ManageAvailabilityPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );

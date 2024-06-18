@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getTherapists } from '../services/api'; // Correct import path
 import './SpecializationPage.css';
 
 const SpecializationPage = () => {
   const [therapists, setTherapists] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTherapists = async () => {
@@ -23,7 +25,7 @@ const SpecializationPage = () => {
             <h2>{therapist.name}</h2>
             <p>{therapist.specialization}</p>
             <p>{therapist.description}</p>
-            <button onClick={() => window.location.href = `/booking/${therapist._id}`}>Book Appointment</button>
+            <button onClick={() => navigate(`/booking/${therapist._id}`)}>Book Appointment</button>
           </div>
         ))}
       </div>

@@ -12,14 +12,18 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      console.log('Logging in user:', { email, password }); // Log data being sent
+      console.log('Logging in user:', { email, password });
       const data = await login({ email, password });
       localStorage.setItem('token', data.token);
-      navigate('/'); // Navigate to the home page after successful login
+      navigate('/'); 
     } catch (err) {
       console.error('Error during login:', err);
       setError('Login failed. Please try again.');
     }
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:5000/api/auth/google';
   };
 
   return (
@@ -36,6 +40,7 @@ const LoginPage = () => {
         </label>
         <button type="submit">Login</button>
       </form>
+      <button onClick={handleGoogleLogin}>Login with Google</button>
       {error && <p className="error">{error}</p>}
     </div>
   );

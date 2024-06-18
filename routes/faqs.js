@@ -1,10 +1,9 @@
 const express = require('express');
-const FAQ = require('../models/FAQ');
-const { auth, admin } = require('../middleware/auth');
+const FAQ = require('../models/FAQ'); // Ensure this model is defined
 const router = express.Router();
 
 // Get all FAQs
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const faqs = await FAQ.find();
     res.json(faqs);
@@ -13,10 +12,11 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// Add a new FAQ (user only)
-router.post('/', auth, async (req, res) => {
+// Create a new FAQ
+router.post('/', async (req, res) => {
   const faq = new FAQ({
     question: req.body.question,
+    answer: req.body.answer,
   });
   try {
     const newFAQ = await faq.save();
@@ -26,16 +26,16 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// Update an FAQ with an answer (admin only)
-router.put('/:id', auth, admin, async (req, res) => {
+// Update an existing FAQ
+router.put('/:id', async (req, res) => {
   try {
     const faq = await FAQ.findById(req.params.id);
     if (!faq) {
       return res.status(404).json({ message: 'FAQ not found' });
     }
     faq.answer = req.body.answer;
-    await faq.save();
-    res.json(faq);
+    const updatedFAQ = await faq.save();
+    res.json(updatedFAQ);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

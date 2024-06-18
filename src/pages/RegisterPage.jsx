@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { register } from '../services/api';
 import './RegisterPage.css';
 
@@ -7,19 +6,17 @@ const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [role, setRole] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      console.log('Registering user:', { name, email, password }); // Log data being sent
-      const data = await register({ name, email, password });
-      localStorage.setItem('token', data.token);
-      navigate('/'); // Navigate to the home page after successful registration
-    } catch (err) {
-      console.error('Error during registration:', err);
-      setError('Registration failed. Please try again.');
+      const response = await register({ name, email, password, role });
+      setMessage('Registration successful!');
+    } catch (error) {
+      console.error('Error registering:', error);
+      setMessage('Registration failed. User may already exist.');
     }
   };
 
@@ -29,19 +26,23 @@ const RegisterPage = () => {
       <form onSubmit={handleRegister} className="register-form">
         <label>
           Name:
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
         </label>
         <label>
           Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </label>
         <label>
           Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </label>
+        <label>
+          Role (optional):
+          <input type="text" value={role} onChange={(e) => setRole(e.target.value)} />
         </label>
         <button type="submit">Register</button>
       </form>
-      {error && <p className="error">{error}</p>}
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };

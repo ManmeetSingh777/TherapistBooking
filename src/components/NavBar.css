@@ -1,30 +1,76 @@
-.navbar {
-    background-color: #333;
-    padding: 1rem;
-  }
-  
-  .navbar ul {
-    list-style: none;
+/* General styles for the navigation bar */
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: rgba(255, 182, 193, 0.2); /* Light pink with transparency */
+    padding: 0 20px;
+    height: 80px;
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
   }
   
-  .navbar li {
-    margin: 0 1rem;
+  /* Styles for the left side of the nav bar */
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+        
+  /* Styles for the logo */
+  .logo {
+    height: 150px; /* Thrice the size (50px * 3) */
+    margin-right: 20px;
+    margin-top: 56px; /* Adjust this value to move the logo down */
   }
   
-  .navbar a, .navbar button {
-    color: #fff;
+  /* Styles for the navigation links */
+  nav a {
+    color: #000000; /* Text color black */
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
+    margin: 0 15px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  nav a:hover {
+    color: #ef9a9a; /* Accent color light pink */
+  }
+  
+  /* Styles for the right side of the nav bar */
+  .nav-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Styles for the profile icon */
+  .profile-icon {
+    background-color: #ef9a9a; /* Accent color light pink */
+    color: #ffffff; /* Text color white */
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
   }
   
-  .navbar a:hover, .navbar button:hover {
-    background-color: #0056b3;
+  button {
+    background-color: #f5cba7; /* Primary color */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    background-color: #ef9a9a; /* Accent color light pink */
   }
   
