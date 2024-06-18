@@ -6,7 +6,15 @@ const router = express.Router();
 
 // Register route
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
+  
+  // Log the incoming request data
+  console.log('Register request body:', req.body);
+
+  // Check if all required fields are provided
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
 
   try {
     let user = await User.findOne({ email });
@@ -16,6 +24,7 @@ router.post('/register', async (req, res) => {
       name,
       email,
       password,
+      role: role || 'user', // Default role to 'user' if not provided
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -23,7 +32,7 @@ router.post('/register', async (req, res) => {
 
     await user.save();
 
-    const payload = { userId: user._id };
+    const payload = { userId: user._id, role: user.role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.json({ token });
@@ -37,14 +46,24 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
+  // Log the incoming request data
+  console.log('Login request body:', req.body);
+
+  // Check if all required fields are provided
+  if (!email || !password) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
   try {
     const user = await User.findOne({ email });
+    console.log('User found:', user); // Log user information
     if (!user) return res.status(400).json({ message: 'Invalid email or password' });
 
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log('Password match:', isMatch); // Log password match result
     if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
 
-    const payload = { userId: user._id };
+    const payload = { userId: user._id, role: user.role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.json({ token });

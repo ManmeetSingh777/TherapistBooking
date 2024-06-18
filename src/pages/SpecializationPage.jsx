@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getTherapists } from '../services/api';
+import { getTherapists } from '../services/api'; // Correct import path
 import './SpecializationPage.css';
 
 const SpecializationPage = () => {
@@ -8,31 +7,26 @@ const SpecializationPage = () => {
 
   useEffect(() => {
     const fetchTherapists = async () => {
-      try {
-        const data = await getTherapists();
-        setTherapists(data);
-      } catch (error) {
-        console.error('Error fetching therapists:', error);
-      }
+      const data = await getTherapists();
+      setTherapists(data);
     };
-
     fetchTherapists();
   }, []);
 
   return (
-    <div>
-      <h2>Specializations</h2>
-      <ul>
+    <div className="specialization">
+      <h1>Our Therapists</h1>
+      <div className="therapists-list">
         {therapists.map((therapist) => (
-          <li key={therapist._id}>
-            <Link to={`therapist/${therapist._id}`}>
-              <img src={therapist.photo} alt={therapist.name} />
-              <h3>{therapist.name}</h3>
-              <p>{therapist.specialization}</p>
-            </Link>
-          </li>
+          <div key={therapist._id} className="therapist-card">
+            <img src={therapist.photo} alt={therapist.name} />
+            <h2>{therapist.name}</h2>
+            <p>{therapist.specialization}</p>
+            <p>{therapist.description}</p>
+            <button onClick={() => window.location.href = `/booking/${therapist._id}`}>Book Appointment</button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

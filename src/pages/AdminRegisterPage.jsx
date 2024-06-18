@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { register } from '../services/api';
-import './RegisterPage.css';
+import { registerAdmin } from '../services/api';
+import './AdminRegisterPage.css';
 
-const RegisterPage = () => {
+const AdminRegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [accessCode, setAccessCode] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      console.log('Registering user:', { name, email, password }); // Log data being sent
-      const data = await register({ name, email, password });
+      console.log('Registering admin:', { name, email, password, accessCode }); // Log data being sent
+      const data = await registerAdmin({ name, email, password, accessCode });
       localStorage.setItem('token', data.token);
       navigate('/'); // Navigate to the home page after successful registration
     } catch (err) {
-      console.error('Error during registration:', err);
-      setError('Registration failed. Please try again.');
+      console.error('Error during admin registration:', err);
+      setError('Registration failed. Please check your access code and try again.');
     }
   };
 
   return (
-    <div className="register">
-      <h1>Register</h1>
-      <form onSubmit={handleRegister} className="register-form">
+    <div className="admin-register">
+      <h1>Admin Register</h1>
+      <form onSubmit={handleRegister} className="admin-register-form">
         <label>
           Name:
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -39,6 +40,10 @@ const RegisterPage = () => {
           Password:
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
+        <label>
+          Access Code:
+          <input type="text" value={accessCode} onChange={(e) => setAccessCode(e.target.value)} />
+        </label>
         <button type="submit">Register</button>
       </form>
       {error && <p className="error">{error}</p>}
@@ -46,4 +51,5 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default AdminRegisterPage;
+    

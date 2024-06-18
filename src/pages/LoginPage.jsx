@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../services/api';
 import './LoginPage.css';
 
@@ -12,11 +12,13 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      console.log('Logging in user:', { email, password }); // Log data being sent
       const data = await login({ email, password });
       localStorage.setItem('token', data.token);
       navigate('/'); // Navigate to the home page after successful login
     } catch (err) {
-      setError('Invalid email or password');
+      console.error('Error during login:', err);
+      setError('Login failed. Please try again.');
     }
   };
 
@@ -35,7 +37,6 @@ const LoginPage = () => {
         <button type="submit">Login</button>
       </form>
       {error && <p className="error">{error}</p>}
-      <p>Don't have an account? <Link to="/register">Create an account</Link></p>
     </div>
   );
 };

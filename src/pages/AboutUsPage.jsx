@@ -1,10 +1,11 @@
 import React from 'react';
+import './AboutUsPage.css';
 
 const AboutUsPage = () => {
   return (
-    <div>
-      <h2>About Us</h2>
-      <p>We are dedicated to providing the best therapy services.</p>
+    <div className="about">
+      <h1>About Us</h1>
+      <p>We are a team of dedicated therapists...</p>
     </div>
   );
 };
