@@ -1,60 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { createAppointment, getAvailableTimes } from '../services/api';
-import './BookingPage.css';
 
 const BookingPage = () => {
   const { therapistId } = useParams();
-  const [date, setDate] = useState('');
-  const [timeSlot, setTimeSlot] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [availableTimes, setAvailableTimes] = useState([]);
 
-  useEffect(() => {
-    const fetchAvailableTimes = async () => {
-      const data = await getAvailableTimes(therapistId);
-      setAvailableTimes(data);
-    };
-    fetchAvailableTimes();
-  }, [therapistId]);
-
-  const handleBooking = async () => {
-    const selectedDate = new Date(date).toDateString();
-    const selectedTimeSlot = timeSlot.trim();
-    const isAvailable = availableTimes.some(time => 
-      new Date(time.date).toDateString() === selectedDate && time.timeSlots.includes(selectedTimeSlot)
-    );
-
-    if (!isAvailable) {
-      setMessage('Selected date and time are not available.');
-      return;
-    }
-
-    const appointmentData = { therapist: therapistId, date, timeSlot, email };
-    await createAppointment(appointmentData);
-    setMessage('Appointment booked successfully!');
+  // Map therapist IDs to their Cal.com booking links
+  const therapistBookingLinks = {
+    'therapist-id-1': 'https://cal.com/manmeetsingh/',
+    'therapist-id-2': 'https://cal.com/many-therapist2/',
+    'therapist-id-3': 'https://cal.com/anos-voldigod-t2c8eh/',
   };
+
+  console.log('Therapist ID:', therapistId); // Log the therapist ID to verify
+  const bookingLink = therapistBookingLinks[therapistId];
 
   return (
     <div className="booking">
       <h1>Book an Appointment</h1>
-      <div className="booking-form">
-        <label>
-          Date:
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-        </label>
-        <label>
-          Time Slot:
-          <input type="text" value={timeSlot} onChange={(e) => setTimeSlot(e.target.value)} />
-        </label>
-        <label>
-          Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <button onClick={handleBooking}>Book Now</button>
-      </div>
-      {message && <p>{message}</p>}
+      {bookingLink ? (
+        <iframe
+          src={bookingLink}
+          title="Cal.com Booking"
+          style={{ width: '100%', height: '600px', border: 'none' }}
+        ></iframe>
+      ) : (
+        <p>No booking link available for this therapist.</p>
+      )}
     </div>
   );
 };

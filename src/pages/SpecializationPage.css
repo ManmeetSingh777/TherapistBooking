@@ -1,32 +1,49 @@
 .specialization {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .therapist-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .therapist-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin: 10px;
-    padding: 20px;
-    text-align: left;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.3s ease;
-  }
-  
-  .therapist-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .therapist-photo {
-    width: 100%;
-    max-width: 150px;
-    height: auto;
-    border-radius: 50%;
-  }
+  padding: 20px;
+}
+
+.therapists-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.therapist-card {
+  display: flex;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.therapist-photo {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.therapist-info {
+  flex: 1;
+}
+
+.therapist-info h2 {
+  margin: 0;
+}
+
+.therapist-info p {
+  margin: 5px 0;
+}
+
+.therapist-info button {
+  padding: 10px 20px;
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.therapist-info button:hover {
+  background-color: #4a148c;
+}

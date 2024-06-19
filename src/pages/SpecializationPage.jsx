@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getTherapists } from '../services/api'; // Correct import path
+import { getTherapists } from '../services/api'; // Adjust the import based on your project structure
 import './SpecializationPage.css';
 
 const SpecializationPage = () => {
   const [therapists, setTherapists] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTherapists = async () => {
       const data = await getTherapists();
+      console.log('Therapists:', data); // Log therapist data to verify IDs
       setTherapists(data);
     };
     fetchTherapists();
@@ -21,11 +20,13 @@ const SpecializationPage = () => {
       <div className="therapists-list">
         {therapists.map((therapist) => (
           <div key={therapist._id} className="therapist-card">
-            <img src={therapist.photo} alt={therapist.name} />
-            <h2>{therapist.name}</h2>
-            <p>{therapist.specialization}</p>
-            <p>{therapist.description}</p>
-            <button onClick={() => navigate(`/booking/${therapist._id}`)}>Book Appointment</button>
+            <img src={therapist.photo} alt={therapist.name} className="therapist-photo" />
+            <div className="therapist-info">
+              <h2>{therapist.name}</h2>
+              <p>{therapist.specialization}</p>
+              <p>{therapist.description}</p>
+              <button onClick={() => window.location.href = `/booking/${therapist._id}`}>Schedule an Interview</button>
+            </div>
           </div>
         ))}
       </div>
